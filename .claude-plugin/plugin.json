@@ -1,0 +1,13 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "training-wheels",
+  "version": "0.1.0",
+  "description": "Temporary coaching lines on your own prompts: a subagent check that teaches you to split big tasks, and a writing note that grades your prompt's prose against four technical-writing rules. Each wheel comes off on a date you set, and a weekly scorecard shows whether your writing improves.",
+  "author": {
+    "name": "Rami Ismael"
+  },
+  "homepage": "https://github.com/Rami-Ismael/training-wheels",
+  "repository": "https://github.com/Rami-Ismael/training-wheels",
+  "license": "MIT",
+  "keywords": ["prompting", "technical-writing", "subagents", "coaching", "scorecard"]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "training-wheels",
+  "description": "Training wheels for prompting Claude Code.",
+  "owner": {
+    "name": "Rami Ismael"
+  },
+  "plugins": [
+    {
+      "name": "training-wheels",
+      "description": "Temporary coaching lines on your own prompts, with off dates and a weekly writing scorecard.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

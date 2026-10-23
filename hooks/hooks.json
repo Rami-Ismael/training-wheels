@@ -1,0 +1,16 @@
+{
+  "description": "Training wheels: one coaching pointer per enabled wheel on each task-shaped prompt",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -I \"${CLAUDE_PLUGIN_ROOT}/hooks/wheels.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
