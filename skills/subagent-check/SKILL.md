@@ -29,20 +29,20 @@ Count parts as units of output: each file that needs its own reading or rewrite,
 Run it on each piece before naming a subagent. A piece goes to a subagent only when it passes all five steps; otherwise it stays in the main session, done inline, written as a skill, or run as a script.
 
 1. **It earns its own context.** One of three conditions holds, and the line names it with its evidence: a token count, the separate directions, the tool that misfired.
-   - *Context:* the piece reads tens of thousands of tokens and the main session needs only a short result. A few thousand does not qualify. If a grep, a page range or a filter would shrink the read, shrink it and stay here.
+   - *Context:* the piece reads tens of thousands of tokens and the main session needs only a short result, and the brief can say exactly what to extract. A few thousand does not qualify. If a grep, a page range or a filter would shrink the read, shrink it and stay here.
    - *Independence:* several fresh contexts explore separate directions in parallel, or one agent checks work without seeing how it was made.
    - *Tools:* the main session measurably picks the wrong tools for the piece, or the piece's instructions contradict the main session's.
-2. **The reason is a real one.** Long instructions belong in a skill, which loads only when needed. Fixed steps belong in a script. A persona earns nothing by itself: a reader panel passes on fresh eyes, under independence, not on its voices.
+2. **The reason is a real one.** Long instructions belong in a skill, which loads only when needed. Fixed steps belong in a script. A persona earns nothing by itself: a reader panel passes on fresh eyes, under independence, not on its voices. Instructions that truly conflict, a strict critic beside a free brainstormer, count under *Tools* in step 1.
 3. **The pieces stand apart.** Split by context, not by kind of work. Pieces that chain on each other's results, or read the same files, stay in one context.
 4. **The result passes the re-read test.** If the main session would have to re-read the files the agent read before it could use the agent's result, the piece stays here. A passing agent returns a short result the main session uses as it stands.
-5. **The job is worth the tokens.** In Anthropic's research system a multi-agent run used about 15 times the tokens of a chat. Scale the count to the job: a lookup of a few tool calls stays here, a comparison takes 2 to 4 agents, and only wide research takes more.
+5. **The job is worth the tokens.** A multi-agent run uses 3 to 10 times the tokens of one agent on the same task, and about 15 times a chat's in Anthropic's research system. Scale the count to the job: a lookup of a few tool calls stays here, a comparison takes 2 to 4 agents, and only wide research takes more.
 
 ## Verify the call
 
 The test is a prediction. Check it against what happened:
 
 - **After the agent returns,** note whether the main session opened the files the agent read, and whether the result's caveats reached the reply. Either miss means the piece failed the re-read test in practice: say so in the reply, and keep that shape in the main session next time.
-- **For a shape that recurs,** measure once. Run one real task both ways, by subagent and in the main session, twice each, since a break can show in one run of two. Compare the result the user accepts, the main session's tokens and the wall time, and read which part changed, not only the total. Keep the subagent only when the main-session version does worse.
+- **For a shape that recurs,** measure once. Run one real task both ways, by subagent and in the main session, twice each, since a break can show in one run of two. Compare the result the user accepts, the main session's tokens and the wall time; an independence piece buys coverage, not speed, and often takes longer, so judge it on what it covered. Read which part changed, not only the total. Keep the subagent only when the main-session version does worse.
 
 ## Shapes that name a subagent
 
@@ -62,4 +62,4 @@ A subagent starts with no conversation. Consistency across files and this conver
 
 ## Briefs
 
-Each brief is one job with a done-condition the agent can check. It names the objective, the output format, the tools or sources to use, and where the task stops; vague briefs make parallel agents repeat each other's searches. Facts the agent cannot work without go in as named fields, not inside free text. The result comes back as a conclusion, the evidence behind it, and its caveats. Scaffold, layout and script get separate briefs. Pick the agent type with the smallest fixed context that has the tools the job needs: a small model compacts early, and its instructions and tool definitions never shrink. When an agent dies, check its files on disk before relaunching.
+Each brief is one job with a done-condition the agent can check. It names the objective, the output format, the tools or sources to use, and where the task stops; vague briefs make parallel agents repeat each other's searches. Facts the agent cannot work without go in as named fields, not inside free text. The result comes back as a conclusion, the evidence behind it, and its caveats. A verifier's brief names the whole check to run and one input that must fail; without both, verifiers pass work after a test or two. Scaffold, layout and script get separate briefs. Pick the agent type with the smallest fixed context that has the tools the job needs: a small model compacts early, and its instructions and tool definitions never shrink. When an agent dies, check its files on disk before relaunching.
