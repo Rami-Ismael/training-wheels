@@ -16,7 +16,7 @@ A **task** asks for work: edit, build, run, research, write. A question about a 
 Open the reply with one line, before the first tool call, then start the task:
 
 - `Subagent: <piece> → <agent type>: <reason>. Ask: "<one-line prompt the user could type>"`, or
-- `Subagent: none: <reason>`, where the reason is one of: sequential steps, a mechanical edit (one find-and-replace pattern), or a judgement only this conversation can make.
+- `Subagent: none: <reason>`, where the reason is one of: sequential steps, a mechanical edit (one find-and-replace pattern), a judgement only this conversation can make, or a job that fails the re-read test.
 
 The `Ask:` line is the lesson: a prompt in the user's voice that would launch the subagent, written so the user can see what a good delegation prompt names.
 
@@ -28,11 +28,19 @@ Count parts as units of output: each file that needs its own reading or rewrite,
 
 A subagent starts with no conversation. Consistency across files and this conversation's context are reasons to write a good brief, not reasons for `none`.
 
+**The re-read test.** If the main session would have to re-read the files the agent read before it could use the agent's result, the job stays in the main session, inline or as a skill. Each shape below passes because its agent returns a short result the main session uses as it stands.
+
 - The same judgement pass (rewrite, style pass, review) over 3 or more files: one agent per file, the shared rules in every brief.
 - Reading 5 or more papers or notes to grade, sort or extract: one read-only agent per batch.
 - A wide read-only sweep whose large output should stay out of this context.
 - An adversarial second read of a document or a finding.
 - A design question: one agent per direction, side by side, with the results compared in the main session.
+- Placing a paper in its field: two web-fetch agents on fixed URLs, one on the paper's references and one on the papers that cite it (the Semantic Scholar API serves both lists). Each returns the 5 papers that matter most.
+- Finding a paper's limits: one web-fetch on its OpenReview reviews and rebuttal, returning each weakness the authors conceded.
+- Deciding whether a paper applies to the project: two agents, one arguing it does and one arguing it does not, each returning its strongest points for comparison in the main session.
+- Checking a figure: an agent sees only the figure and states the claim it makes. A mismatch with the paper's or post's text flags the figure or the text.
+- Testing a draft on readers: one agent per audience reads the same draft and returns the first sentence where it got lost, the sentence it would attack, and a three-sentence explain-back.
+- Auditing a draft's numbers: one read-only agent traces every number to its source note and returns the numbers with no source.
 
 ## Briefs
 
